@@ -1,0 +1,8 @@
+<mat-card class="card" *ngFor="let item of news$ | async">
+  <mat-card-title>
+    <h3>{{ item.title }}</h3>
+  </mat-card-title>
+  <mat-card-content>
+    <p>{{ item.content }}</p>
+  </mat-card-content>
+</mat-card>

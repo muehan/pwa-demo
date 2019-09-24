@@ -1,0 +1,38 @@
+.title {
+  text-decoration: none;
+  color: #101010;
+}
+
+.link-item {
+  padding: 5px 10px 5px 10px;
+  height: 35px;
+}
+
+.link-link {
+  height: 100%;
+  text-decoration: none;
+  color: #101010;
+}
+
+.link-content {
+  display: flex;
+  align-items: center;
+}
+
+.sidenav {
+  width: 150px;
+}
+
+.link-icon {
+  margin-right: 15px;
+}
+
+.container {
+  margin: 5px;
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
