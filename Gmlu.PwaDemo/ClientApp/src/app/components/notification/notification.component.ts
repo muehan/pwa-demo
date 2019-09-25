@@ -3,6 +3,7 @@ import { SwPush } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PushNotificationService } from '../../services/push-notification.service';
 import { take } from 'rxjs/operators';
+import { MessageModel } from './message';
 
 @Component({
   selector: 'app-notification',
@@ -104,16 +105,20 @@ export class NotificationComponent implements OnInit {
   }
 
   public showMessages(): void {
-    this.swPush.messages.subscribe(message => {
-      console.log(message);
-      const snackBarRef = this.snackBar.open(
-        'Message from the server: ' + message,
-        null,
-        {
-          duration: 5000
-        }
-      );
-    });
+    this.swPush
+      .messages
+      .subscribe(message => {
+        console.log(message);
+
+        const msg: MessageModel = <MessageModel> message;
+        const snackBarRef = this.snackBar.open(
+          'Message from the server: ' + msg.Msg,
+          null,
+          {
+            duration: 5000
+          }
+        );
+      });
   }
 
   public sendTestMessage(): void {
