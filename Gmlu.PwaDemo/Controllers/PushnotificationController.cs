@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Gmlu.PwaDemo.Providers;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebPush;
@@ -35,10 +36,12 @@ namespace Gmlu.PwaDemo.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            var vapidProvider = VapidProvider.GetInstance();
+
             var vapidDetails = new VapidDetails(
                 "http://localhost:5000",
-                "removed",
-                "removed");
+                vapidProvider.PublicKey,
+                vapidProvider.PrivateKey);
 
             var webPushClient = new WebPushClient();
             webPushClient.SetVapidDetails(vapidDetails);
