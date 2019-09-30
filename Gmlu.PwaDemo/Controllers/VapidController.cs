@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Gmlu.PwaDemo.Providers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Gmlu.PwaDemo.Controllers
 {
@@ -6,5 +7,12 @@ namespace Gmlu.PwaDemo.Controllers
     [ApiController]
     public class VapidController : ControllerBase
     {
+
+        public IActionResult Get()
+        {
+            var vapidService = VapidProvider.GetInstance();
+
+            return Ok();
+        }
     }
 }
