@@ -1,3 +1,4 @@
+import { VapidService } from './../../services/vapid.service';
 import { Component, OnInit } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,12 +18,17 @@ export class NotificationComponent implements OnInit {
   constructor(
     private swPush: SwPush,
     private pushSubscriptionService: PushNotificationService,
-    public snackBar: MatSnackBar
+    private vapidservice: VapidService,
+    public snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
-    this.VAPID_PUBLIC_KEY =
-      'BP5DZdC0Tn5tiuiM5yFX9kIKa2QSwiEqjgQTjhxN73rd_XJ4qDIaaJtYWHRUUU62lcVGj4m0xF3RN3UVisNP2JI';
+
+    this.vapidservice
+      .get()
+      .subscribe(x => {
+        this.VAPID_PUBLIC_KEY = x.publicKey;
+      });
   }
 
   public subscribeToPush(): void {

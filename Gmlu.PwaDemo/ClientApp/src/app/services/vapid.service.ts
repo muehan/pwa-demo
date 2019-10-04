@@ -1,3 +1,4 @@
+import { VapidViewModel } from './../models/vapid.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ export class VapidService {
     private http: HttpClient,
   ) { }
 
-  public get(): Observable<string> {
-    return this.http.get<string>(baseUrl);
+  public get(): Observable<VapidViewModel> {
+    return this.http.get<VapidViewModel>(baseUrl);
   }
 }

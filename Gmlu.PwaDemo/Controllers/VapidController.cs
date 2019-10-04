@@ -1,4 +1,5 @@
 ﻿using Gmlu.PwaDemo.Providers;
+using Gmlu.PwaDemo.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gmlu.PwaDemo.Controllers
@@ -11,6 +12,9 @@ namespace Gmlu.PwaDemo.Controllers
         public IActionResult Get()
         {
             var vapidService = VapidProvider.GetInstance();
+
+            var viewModel = new VapidViewModel();
+            viewModel.PublicKey = vapidService.PublicKey;
 
             return Ok();
         }
