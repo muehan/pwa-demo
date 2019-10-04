@@ -16,7 +16,7 @@ namespace Gmlu.PwaDemo.Controllers
             var viewModel = new VapidViewModel();
             viewModel.PublicKey = vapidService.PublicKey;
 
-            return Ok();
+            return Ok(viewModel);
         }
     }
 }
