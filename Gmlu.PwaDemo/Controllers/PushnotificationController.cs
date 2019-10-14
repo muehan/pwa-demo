@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Gmlu.PwaDemo.Providers;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +17,44 @@ namespace Gmlu.PwaDemo.Controllers
 
         // POST: api/List
         [HttpPost]
-        public void Post([FromBody] PushNotificationCommand command)
+        public IActionResult Post([FromBody] PushNotificationCommand command)
         {
+            if(command.Subscription == null)
+            {
+                return BadRequest();
+            }
+
             if (command.Action == "subscribe")
             {
-                _subscriptions
-                    .Add(
-                        command.Subscription);
+                if(!_subscriptions.Any(x => x.Auth == command.Subscription.Auth))
+                {
+                    _subscriptions
+                        .Add(
+                            command.Subscription);
+
+                    return Ok();
+                }
+
+                return BadRequest();
             }
 
             if (command.Action == "unsubscribe")
             {
-                _subscriptions
-                    .Remove(
-                        command.Subscription);
+                var existingSubscription = _subscriptions.SingleOrDefault(x => x.Auth == command.Subscription.Auth);
+
+                if(existingSubscription != null)
+                {
+                    _subscriptions
+                        .Remove(
+                            existingSubscription);
+
+                    return Ok();
+                }
+
+                return BadRequest();
             }
+
+            return BadRequest();
         }
 
         [HttpGet]

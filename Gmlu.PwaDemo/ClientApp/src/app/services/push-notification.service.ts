@@ -8,36 +8,48 @@ const baseUrl = 'https://localhost:5001/api/pushnotification';
   providedIn: 'root'
 })
 export class PushNotificationService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public addSubscriber(subscription: PushSubscription): Observable<any> {
     console.log('[Push Subscription Service] Adding subscriber');
 
-    const sub = subscription.toJSON();
-    console.log(subscription);
-    console.log(sub);
+    if (subscription) {
+      const sub = subscription.toJSON();
 
-    const body = {
-      action: 'subscribe',
-      subscription: {
-        endpoint: sub.endpoint,
-        p256DH: sub.keys['p256dh'],
-        auth: sub.keys['auth'],
-      },
-    };
+      const body = {
+        action: 'subscribe',
+        subscription: {
+          endpoint: sub.endpoint,
+          p256DH: sub.keys['p256dh'],
+          auth: sub.keys['auth'],
+        },
+      };
 
-    return this.http.post(baseUrl, body);
+      return this.http.post(baseUrl, body);
+    }
+
+    return null;
   }
 
   public deleteSubscriber(subscription: PushSubscription): Observable<any> {
     console.log('[Push Subscription Service] Deleting subscriber');
 
-    const body = {
-      action: 'unsubscribe',
-      subscription
-    };
+    if (subscription) {
+      const sub = subscription.toJSON();
 
-    return this.http.post(baseUrl, body);
+      const body = {
+        action: 'unsubscribe',
+        subscription: {
+          endpoint: sub.endpoint,
+          p256DH: sub.keys['p256dh'],
+          auth: sub.keys['auth'],
+        },
+      };
+
+      return this.http.post(baseUrl, body);
+    }
+
+    return null;
   }
 
   public pushTestmessage(): Observable<any> {

@@ -42,53 +42,61 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   public subscribeToPush(): void {
-    this.swPush
-      .requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
-      })
-      .then(pushSubscription => {
-        this.subscriptionSubscription = this.pushSubscriptionService
-          .addSubscriber(
-            pushSubscription)
-          .subscribe(
-            res => {
-              console.log('[Push Subscription] Add subscriber request answer');
-              console.log(res);
 
-              const snackBarRef = this.snackBar.open(
-                'Now you are subscribed',
-                null,
-                {
-                  duration: this.snackBarDuration
-                }
-              );
+    console.log('subscribe button pressed');
 
-              this.notificationSubscription = this.swPush
-                .messages
-                .subscribe(message => {
-                  console.log(message);
+    if (!this.subscriptionSubscription || this.subscriptionSubscription.closed) {
+      console.log('add new subscription');
+      this.swPush
+        .requestSubscription({
+          serverPublicKey: this.VAPID_PUBLIC_KEY
+        })
+        .then(pushSubscription => {
+          this.subscriptionSubscription = this.pushSubscriptionService
+            .addSubscriber(
+              pushSubscription)
+            .subscribe(
+              res => {
+                console.log('[Push Subscription] Add subscriber request answer');
+                console.log(res);
 
-                  const msg: MessageModel = <MessageModel>message;
-                  const snackBarRef = this.snackBar.open(
-                    'Message from the server: ' + msg.Msg,
-                    null,
-                    {
-                      duration: 5000
-                    }
-                  );
-                });
-            },
-            err => {
-              console.log(
-                '[Push Subscription] Add subscriber request failed',
-                err
-              );
-            }
-          );
-      })
-      .catch(err => {
-        console.error(err);
-      });
+                const snackBarRef = this.snackBar.open(
+                  'Now you are subscribed',
+                  null,
+                  {
+                    duration: this.snackBarDuration
+                  }
+                );
+
+                this.notificationSubscription = this.swPush
+                  .messages
+                  .subscribe(message => {
+                    console.log(message);
+
+                    const msg: MessageModel = <MessageModel>message;
+                    const snackBarRef = this.snackBar.open(
+                      'Message from the server: ' + msg.Msg,
+                      null,
+                      {
+                        duration: 5000
+                      }
+                    );
+                  });
+              },
+              err => {
+                console.log(
+                  '[Push Subscription] Add subscriber request failed',
+                  err
+                );
+              }
+            );
+        })
+        .catch(err => {
+          console.log('error during registration of pushnotification');
+          console.log(err.message);
+          console.error(err);
+        });
+    }
   }
 
   public unsubscribeFromPush(): void {
