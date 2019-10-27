@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private handsetSubscription: Subscription;
   private installPromptEvent;
 
-  public opened: boolean;
+  public opened: boolean = true;
   public btnInstallDisabled = true;
 
   constructor(private breakpointObserver: BreakpointObserver) {
