@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private handsetSubscription: Subscription;
   private installPromptEvent;
 
-  public opened: boolean = true;
+  public opened: boolean = false;
   public btnInstallDisabled = true;
 
   constructor(private breakpointObserver: BreakpointObserver) {
@@ -32,9 +32,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.handsetSubscription = this.isHandset$.subscribe(
-      x => (this.isHandset = x)
-    );
+    this.handsetSubscription = this.isHandset$
+      .subscribe(
+        x => {
+          this.isHandset = x;
+          if (!this.isHandset) {
+            this.opened = true;
+          }
+        });
   }
 
   ngOnDestroy(): void {

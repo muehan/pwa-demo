@@ -7,6 +7,7 @@
             "files": [
                 "/favicon.ico",
                 "/index.html",
+                "/manifest.json",
                 "/*.css",
                 "/*.js"
             ]
@@ -34,7 +35,7 @@
     "dataGroups": [{
             "name": "api-freshness",
             "urls": [
-                "/api/news"
+                "https://localhost:5001/api/news"
             ],
             "cacheConfig": {
                 "maxSize": 100,
@@ -46,8 +47,7 @@
         {
             "name": "api-performance",
             "urls": [
-                "/api/list",
-                "/about"
+                "https://localhost:5001/api/list"
             ],
             "cacheConfig": {
                 "maxSize": 100,
