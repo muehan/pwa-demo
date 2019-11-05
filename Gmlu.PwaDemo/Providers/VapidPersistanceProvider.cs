@@ -13,7 +13,8 @@ namespace Gmlu.PwaDemo.Providers
         {
             if(!File.Exists(_filename))
             {
-                File.Create(_filename);
+                var stream = File.Create(_filename);
+                stream.Close();
             }
 
             File.WriteAllText(
