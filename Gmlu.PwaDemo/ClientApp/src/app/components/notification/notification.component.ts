@@ -71,16 +71,22 @@ export class NotificationComponent implements OnInit, OnDestroy {
                 this.notificationSubscription = this.swPush
                   .messages
                   .subscribe(message => {
-                    console.log(message);
 
                     const msg: MessageModel = <MessageModel>message;
-                    const snackBarRef = this.snackBar.open(
-                      'Message from the server: ' + msg.Msg,
-                      null,
-                      {
-                        duration: 5000
-                      }
-                    );
+
+                    const options = {
+                     body: msg.Msg,
+                     icon: msg.Icon,
+                     badgeUrl: 'https://pwa-demo.westeurope.cloudapp.azure.com/news',
+                   };
+
+                    navigator.serviceWorker.getRegistration().then(reg => {
+                      return reg.showNotification('News from PWA', options).then(res => {
+                        console.log(res);
+                      }, err => {
+                        console.error(err);
+                      });
+                    });
                   });
               },
               err => {

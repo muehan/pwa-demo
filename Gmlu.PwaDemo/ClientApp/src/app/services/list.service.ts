@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
-const baseUrl = 'https://localhost:5001/api/list';
+const baseUrl = environment.baseUrl + 'list';
 // const baseUrl = '/api/list';
 
 @Injectable({

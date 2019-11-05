@@ -2,8 +2,9 @@ import { VapidViewModel } from './../models/vapid.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-const baseUrl = 'https://localhost:5001/api/vapid';
+const baseUrl = environment.baseUrl + 'vapid';
 
 @Injectable({
   providedIn: 'root'

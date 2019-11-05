@@ -7,11 +7,25 @@ namespace Gmlu.PwaDemo.Providers
 
         private static VapidProvider _instance;
 
-        private readonly VapidDetails _vapidKeys;
+        private readonly VapidDetails _vapidDetails;
 
         private VapidProvider()
         {
-            _vapidKeys = VapidHelper.GenerateVapidKeys();
+            var persistance = new VapidPersistanceProvider();
+
+            var model = persistance.GetFromFile();
+            if(model == null)
+            {
+                _vapidDetails = VapidHelper
+                    .GenerateVapidKeys();
+
+                persistance
+                    .SaveToFile(
+                        _vapidDetails);
+            } else
+            {
+                _vapidDetails = model;
+            }
         }
 
         public static VapidProvider GetInstance()
@@ -24,8 +38,8 @@ namespace Gmlu.PwaDemo.Providers
             return _instance;
         }
 
-        public string PublicKey => _vapidKeys.PublicKey;
+        public string PublicKey => _vapidDetails.PublicKey;
 
-        public string PrivateKey => _vapidKeys.PrivateKey;
+        public string PrivateKey => _vapidDetails.PrivateKey;
     }
 }
