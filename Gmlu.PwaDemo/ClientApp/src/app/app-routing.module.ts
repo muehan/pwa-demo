@@ -13,7 +13,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'news', component: NewsComponent },
   { path: 'notification', component: NotificationComponent },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({

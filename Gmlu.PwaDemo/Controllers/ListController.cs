@@ -8,10 +8,11 @@ namespace Gmlu.PwaDemo.Controllers
     [ApiController]
     public class ListController : ControllerBase
     {
-        private readonly List<string> _items = new List<string>
-        {
-            "salt", "pepper", "coffee", "bananas"
-        };
+        private readonly List<string> _items = System.IO.File.ReadAllText("list.txt").Split(',').Select(x => x.Trim()).ToList();
+            // new List<string>
+        //{
+        //    "salt", "pepper", "coffee", "bananas", "Apples", "Nuts"
+        //};
 
         // GET: api/List
         [HttpGet]
